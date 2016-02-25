@@ -1,0 +1,142 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/master.css" media="screen" title="no title" charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <title>Fancy Canvas</title>
+  </head>
+  <body>
+    <canvas id="canvas" width="600" height="600">
+    </canvas>
+    <script type="text/javascript">
+      function randNumberTwoFiftyFive() {
+        return Math.floor(Math.random() * 255);
+      }
+      //return a randomRGBA
+      function returnRandomRGBA() {
+        return 'rgba('+randNumberTwoFiftyFive()+','+randNumberTwoFiftyFive()+
+        ','+randNumberTwoFiftyFive()+','+Math.random()+')';
+      }
+      //set up canvas
+      var canvas = document.getElementById('canvas');
+      var context = canvas.getContext('2d');
+      var canvasLength = 600;
+      var canvasHeight = 600;
+
+      // FIRST PROBABILITY ATTEMPT
+      // function makeJamesASprite(){
+      //   var x = 0;
+      //   var y = 0;
+      //   var primaryColor = returnRandomRGBA();
+      //   var secondaryColor1 = returnRandomRGBA();
+      //   var secondaryColor2 = returnRandomRGBA();
+      //   for (i=1; i <= 144; i++){
+      //     //console.log(720 - dansProbabilityFunction((x/50),(y/50)))
+      //     if(Math.random()*500 > 720 - dansProbabilityFunction((x/50),(y/50))){
+      //       //console.log('primary');
+      //       context.fillStyle = primaryColor;
+      //       context.fillRect(x,y,50,50);
+      //     } else if(Math.random()*550 > 720 - dansProbabilityFunction((x/50),(y/50))){
+      //       //console.log('secondary1');
+      //       context.fillStyle = secondaryColor1;
+      //       context.fillRect(x,y,50,50);
+      //     } else if(Math.random()*2000 > 720 - dansProbabilityFunction((x/50),(y/50))) {
+      //       //console.log('secondary 2');
+      //       context.fillStyle = secondaryColor2;
+      //       context.fillRect(x,y,50,50);
+      //     }
+      //     x += canvasLength/12;
+      //     if (i%12==0){
+      //       y += canvasHeight/12;
+      //       x = 0;
+      //     }
+      //   }
+      //   context.clearRect(250,250,100,100);
+      //   context.fillStyle = primaryColor;
+      //   context.fillRect(250,250,50,50);
+      //   context.fillRect(300,250,50,50);
+      //   context.fillRect(250,300,50,50);
+      //   context.fillRect(300,300,50,50);
+      // }
+      //makeJamesASprite();
+      // END FIRST PROBABILITY ATTEMPT
+
+      // SECOND ATTEMPT
+      function makeJamesASprite(){
+        var x = 250;
+        var y = 250;
+        var primaryColor = returnRandomRGBA();
+        var secondaryColor1 = returnRandomRGBA();
+        var secondaryColor2 = returnRandomRGBA();
+        var hasBeenFilled = [
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','',''],
+          ['','','','','','','','','','','','']
+        ];
+        context.fillStyle = primaryColor;
+        context.fillRect(250,250,50,50);
+        context.fillRect(300,250,50,50);
+        context.fillRect(250,300,50,50);
+        context.fillRect(300,300,50,50);
+        hasBeenFilled[5][5] = 'x';
+        hasBeenFilled[5][6] = 'x';
+        hasBeenFilled[6][5] = 'x';
+        hasBeenFilled[6][6] = 'x';
+        console.log(hasBeenFilled);
+        for (i=1; i <= 140; i++){
+
+          x += canvasLength/12;
+          if (i%12==0){
+            y += canvasHeight/12;
+            x = 0;
+          }
+        }
+      }
+      makeJamesASprite();
+      // END SECOND ATTEMPT
+
+      // function semiGaussianDistribution(){
+      //   var x = 0;
+      //   var y = 0;
+      //   var results = [];
+      //   for (i=1; i <= 144; i++){
+      //     results.push(10*((((x-6)*(x-6))/1) +((y-6)*(y-6)/1)))
+      //     x += 1;
+      //     if (i%12==0){
+      //       y += 1;
+      //       //console.log(y);
+      //     } else if (x > 12) x = 0;
+      //   }
+      //   console.log(results);
+      // }
+      // semiGaussianDistribution();
+
+
+      // dansProbabilityFunction returns a number between 10 and 720 or so
+      // it was supposed to be kind of gaussian, but I couldn't be bothered
+      // to re-read a chapter of a stats textbook.
+      function dansProbabilityFunction(x,y){
+          return (10*((((x-6)*(x-6))/1) +((y-6)*(y-6)/1)));
+      }
+      function aMillionSprites(spriteGenerator){
+        var start = new Date().getTime();
+        for (var i = 0; i < 10000; i++){
+          spriteGenerator();
+        }
+        var elapsed = new Date().getTime() - start;
+        console.log(elapsed);
+        return elapsed;
+      }
+      //aMillionSprites(makeJamesASprite);
+    </script>
+  </body>
+</html>
