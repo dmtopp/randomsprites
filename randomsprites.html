@@ -15,7 +15,7 @@
       //return a randomRGBA
       function returnRandomRGBA() {
         return 'rgba('+randNumberTwoFiftyFive()+','+randNumberTwoFiftyFive()+
-        ','+randNumberTwoFiftyFive()+','+Math.random()+')';
+        ','+randNumberTwoFiftyFive()+',1)';
       }
       //set up canvas
       var canvas = document.getElementById('canvas');
@@ -96,10 +96,37 @@
         var sideLength = 3;
         var direction = [[50,0],[0,50],[-50,0],[0,-50]];
         var directionIndex = 0;
+        var squareBefore = '';
         for (i=1; i <= 44; i++){
+          if (squareBefore){
+            //console.log('true!')
+            if (Math.random()*10 > 8){
+              context.fillStyle = secondaryColor1;
+              hasBeenFilled[y/50][x/50] = 'x';
+            }
+            else if (Math.random()*10 > 4){
+              context.fillStyle = primaryColor;
+              hasBeenFilled[y/50][x/50] = 'x';
+            }
+            else if (Math.random()*10 > 0){
+              context.fillStyle = "black";
+            }
+
+          }else{
+            if (Math.random()*10 > 10){
+              context.fillStyle = secondaryColor1;
+              hasBeenFilled[y/50][x/50] = 'x';
+            }
+            else if (Math.random()*10 > 9){
+              context.fillStyle = primaryColor;
+              hasBeenFilled[y/50][x/50] = 'x';
+            }
+            else if (Math.random()*10 > 0){
+              context.fillStyle = "black";
+            }
+          }
           context.fillRect(x,y,50,50);
-          console.log(x/50+' '+y/50);
-          hasBeenFilled[y/50][x/50] = 'x';
+          //console.log(x/50+' '+y/50);
           if (i % sideLength == 0) {
             directionIndex++;
           }
@@ -111,6 +138,8 @@
             y -= 50;
             i = 0;
           } else if(i != 44){
+              console.log(hasBeenFilled[y/50][x/50]);
+              squareBefore = hasBeenFilled[y/50][x/50];
               x += direction[directionIndex][0];
               y += direction[directionIndex][1];
           }
